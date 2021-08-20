@@ -1,0 +1,26 @@
+* {
+  padding: 0px;
+  margin: 0px;
+  box-sizing: border-box;
+  font-family: "Roboto", sans-serif;
+}
+.App {
+  background-color: #d4eafd;
+  height: 100vh;
+  padding: 2em;
+}
+.label {
+  color: darkslategrey;
+  font-size: 0.8em;
+  font-weight: 500;
+}
+.cardBackground {
+  background-image: url("./assets//images//6.jpeg");
+  background-position: center;
+  background-size: cover;
+}
+.cardBackgroundBack {
+  background-image: url("./assets//images/16.jpeg");
+  background-position: center;
+  background-size: cover;
+}

@@ -1,0 +1,29 @@
+.inputWrap input {
+  border: 1px solid lightgrey;
+  outline: none;
+  padding: 0.7em;
+  border-radius: 5px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin: 0.2em auto;
+  font-weight: 400;
+  color: darkslategrey;
+  font-size: 1em;
+}
+.inputWrap input:focus-within {
+  border: 1px solid dodgerblue;
+}
+.inputWrap label {
+  color: darkslategrey;
+  font-size: 0.8em;
+  font-weight: 500;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type="number"] {
+  -moz-appearance: textfield;
+}

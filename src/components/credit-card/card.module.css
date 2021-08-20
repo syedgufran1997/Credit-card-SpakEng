@@ -1,0 +1,67 @@
+.CardWrapper {
+  height: 13em;
+  position: relative;
+  z-index: 10;
+  margin: 0 auto;
+  padding: 1.2em;
+  border-radius: 10px;
+  width: 80%;
+  max-width: 350px;
+  box-shadow: 0px 8px 20px 10px rgba(146, 160, 182, 0.78);
+  -webkit-box-shadow: 0px 8px 20px 10px rgba(146, 160, 182, 0.78);
+  -moz-box-shadow: 0px 8px 20px 10px rgba(146, 160, 182, 0.78);
+}
+.imgWrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.chipWrap img {
+  height: 2.5em;
+  width: 3em;
+}
+.cardType img {
+  height: 2.2em;
+  width: 5em;
+}
+.cardNmuber {
+  height: 5.5em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: auto;
+}
+.cardNmuberEdit {
+  box-shadow: 0px 0px 0px 1.5px white;
+  border-radius: 5px;
+}
+.cardNmuber h3 {
+  color: white;
+  letter-spacing: 0.2em;
+}
+.nameexpireWrap {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: white;
+}
+.nameexpireWrap p {
+  font-size: 0.7em;
+  margin-bottom: 0.5em;
+}
+.nameexpireWrap h5 {
+  font-size: 0.9em;
+}
+.holderNameWrap {
+  width: 75%;
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
+.holderNameWrap h5 {
+  display: flex;
+  flex-wrap: nowrap;
+  width: 90%;
+}
+.expireWrap {
+  width: 20%;
+}
