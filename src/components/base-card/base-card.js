@@ -1,37 +1,44 @@
-import React, { useState } from "react";
+import React from "react";
 import InputField from "../input/input";
 import cardStyles from "./basecard.module.css";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import Button from "../button/button";
-import CreditcardBack from "../credit-card-back/credit-card-back";
-import Creditcard from "../credit-card/card";
-import ReactCardFlip from "react-card-flip";
+import Cards from "react-credit-cards";
+import "../../cardstyles.css";
+// import "react-credit-cards/es/styles-compiled.css";
 
-function BaseCard({ onClick }) {
-  const { handleChange, handleSubmit, values, touched, errors, handleBlur } =
-    useFormik({
-      initialValues: {
-        cardNumber: "#### #### #### ####",
-        cardName: "FULL NAME",
-        cvvNumber: "",
-        month: "MM",
-        year: "YY",
-      },
-      validationSchema: yup.object({
-        cardNumber: yup.string().required("Card Number is required"),
-        cardName: yup
-          .string()
-          .required("Card Name is required")
-          .max(15, "Name should be at most 20 characters only"),
-        cvvNumber: yup.string().required("CVV required"),
-      }),
-      onSubmit: (values) => {
-        console.log(values, "values");
-      },
-    });
-
-  const [isFlipped, setIsFlipped] = useState(false);
+function BaseCard() {
+  const {
+    handleChange,
+    handleSubmit,
+    values,
+    touched,
+    errors,
+    handleBlur,
+    setFieldValue,
+  } = useFormik({
+    initialValues: {
+      number: "",
+      cardName: "FULL NAME",
+      cvc: "",
+      expiry: "",
+      month: "MM",
+      year: "YY",
+      focus: "",
+    },
+    validationSchema: yup.object({
+      number: yup.string().required("Card Number is required"),
+      cardName: yup
+        .string()
+        .required("Card Name is required")
+        .max(15, "Name should be at most 20 characters only"),
+      cvc: yup.string().required("CVV required"),
+    }),
+    onSubmit: (values) => {
+      console.log(values, "values");
+    },
+  });
 
   const MonthData = [
     { label: "Jan", value: "01" },
@@ -63,23 +70,36 @@ function BaseCard({ onClick }) {
     { value: "21", label: "2021" },
   ];
 
-  return (
-    <div>
-      {/* credit card  */}
-      <ReactCardFlip isFlipped={isFlipped} flipDirection="horizontal">
-        {/* Credit card front side  */}
-        <Creditcard
-          Expires={`${values.month} / ${values.year}`}
-          CardName={values.cardName}
-          CardNumber={values.cardNumber}
-        />
+  const handleDate = (e) => {
+    setFieldValue("month", e.target.value);
+    setFieldValue("expiry", e.target.value);
+  };
+  const handleExpiry = (e) => {
+    setFieldValue("expiry", values.month.concat(e.target.value));
+    handleChange(e);
+    // SetExpiry(month.concat(e.target.value));
+  };
 
-        {/* credit card back side  */}
-        <CreditcardBack
-          onClickBack={() => setIsFlipped(false)}
-          cvv={values.cvvNumber}
+  const handleInputFocus = (e) => {
+    console.log("focus is working");
+    setFieldValue("focus", e.target.name);
+  };
+
+  return (
+    <div className="">
+      <div className="credit-card">
+        <Cards
+          locale={{ valid: "Expires" }}
+          placeholders={{ name: "FULL NAME" }}
+          preview={false}
+          cvc={values.cvc}
+          expiry={values.expiry}
+          expiryyear={values.year}
+          focused={values.focus}
+          name={values.cardName}
+          number={values.number}
         />
-      </ReactCardFlip>
+      </div>
 
       {/* BaseCard input details */}
       <div className={cardStyles.cardWrapper}>
@@ -87,16 +107,20 @@ function BaseCard({ onClick }) {
           <div className={cardStyles.inputWrap}>
             <InputField
               labelName="Card Number"
-              value={values.cardNumber}
+              value={values.number}
               onChange={handleChange}
               onBlur={handleBlur}
+              name="number"
+              maxLength="16"
+              pattern="[0-9]+"
               id="cardNumber"
               type="number"
-              placeholder=""
+              onPaste={(e) => e.preventDefault()}
+              onFocus={(e) => handleInputFocus(e)}
             />
 
-            {touched.cardNumber && errors.cardNumber ? (
-              <div className={cardStyles.error}>{errors.cardNumber}</div>
+            {touched.number && errors.number ? (
+              <div className={cardStyles.error}>{errors.number}</div>
             ) : null}
           </div>
 
@@ -125,12 +149,14 @@ function BaseCard({ onClick }) {
                     <select
                       name="month"
                       value={values.month}
-                      onChange={handleChange}
+                      onChange={(e) => {
+                        handleDate(e);
+                      }}
                       onBlur={handleBlur}
                     >
                       <option value="MM" label="Month" defaultValue />
                       {MonthData.map((item, i) => (
-                        <option value={item.value} label={item.label} />
+                        <option key={i} value={item.value} label={item.label} />
                       ))}
                     </select>
                   </div>
@@ -141,12 +167,12 @@ function BaseCard({ onClick }) {
                     <select
                       name="year"
                       value={values.year}
-                      onChange={handleChange}
+                      onChange={(e) => handleExpiry(e)}
                       onBlur={handleBlur}
                     >
                       <option value="YY" label="Year" defaultValue />
                       {YearData.map((item, i) => (
-                        <option value={item.value} label={item.label} />
+                        <option key={i} value={item.value} label={item.label} />
                       ))}
                     </select>
                   </div>
@@ -157,18 +183,20 @@ function BaseCard({ onClick }) {
             <div className={cardStyles.cvvWrap}>
               <div className={cardStyles.inputWrap}>
                 <InputField
-                  onClick={() => setIsFlipped(true)}
+                  name="cvc"
                   labelName="CVV"
-                  value={values.cvvNumber}
+                  value={values.cvc}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  id="cvvNumber"
-                  type="number"
-                  placeholder=""
+                  id="cvc"
+                  type="tel"
+                  maxlength="3"
+                  pattern="\d*"
+                  onFocus={(e) => handleInputFocus(e)}
                 />
 
-                {touched.cvvNumber && errors.cvvNumber ? (
-                  <div className={cardStyles.error}>{errors.cvvNumber}</div>
+                {touched.cvc && errors.cvc ? (
+                  <div className={cardStyles.error}>{errors.cvc}</div>
                 ) : null}
               </div>
             </div>

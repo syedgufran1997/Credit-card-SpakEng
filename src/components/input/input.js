@@ -9,9 +9,12 @@ function Input({
   placeholder,
   onChange,
   onBlur,
-  onTouch,
   type,
   onClick,
+  onFocus,
+  maxLength,
+  onKeyPress,
+  onPaste,
 }) {
   return (
     <div className={inputStyles.inputWrap}>
@@ -24,8 +27,11 @@ function Input({
         placeholder={placeholder}
         onChange={onChange}
         onBlur={onBlur}
-        onTouch={onTouch}
         onClick={onClick}
+        onFocus={onFocus}
+        onPaste={onPaste}
+        onKeyPress={onKeyPress}
+        maxLength={maxLength}
       />
     </div>
   );

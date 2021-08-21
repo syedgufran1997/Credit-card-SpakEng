@@ -1,7 +1,7 @@
 .inputWrap input {
   border: 1px solid lightgrey;
   outline: none;
-  padding: 0.7em;
+  padding: 0.6em;
   border-radius: 5px;
   width: 100%;
   display: flex;
@@ -9,7 +9,7 @@
   margin: 0.2em auto;
   font-weight: 400;
   color: darkslategrey;
-  font-size: 1em;
+  font-size: 0.9em;
 }
 .inputWrap input:focus-within {
   border: 1px solid dodgerblue;
