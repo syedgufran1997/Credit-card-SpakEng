@@ -107,7 +107,7 @@ function BaseCard() {
 
       {/* BaseCard input details */}
       <div className={cardStyles.cardWrapper}>
-        <p className={cardStyles.cardHolder}>Card Holder</p>
+        {/* <p className={cardStyles.cardHolder}>Card Holder</p> */}
         <form className={cardStyles} onSubmit={handleSubmit}>
           <div className={cardStyles.inputWrap}>
             <InputField
