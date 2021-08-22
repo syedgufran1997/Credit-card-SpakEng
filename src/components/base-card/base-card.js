@@ -34,6 +34,8 @@ function BaseCard() {
         .required("Card Name is required")
         .max(15, "Name should be at most 20 characters only"),
       cvc: yup.string().required("CVV required"),
+      month: yup.string().required("month required"),
+      year: yup.string().required("year required"),
     }),
     onSubmit: (values) => {
       console.log(values, "values");
@@ -41,6 +43,7 @@ function BaseCard() {
   });
 
   const MonthData = [
+    { label: "Month", value: "" },
     { label: "Jan", value: "01" },
     { label: "Feb", value: "02" },
     { label: "Mar", value: "03" },
@@ -56,6 +59,7 @@ function BaseCard() {
   ];
 
   const YearData = [
+    { value: "", label: "Year" },
     { value: "10", label: "2010" },
     { value: "11", label: "2011" },
     { value: "12", label: "2012" },
@@ -71,8 +75,8 @@ function BaseCard() {
   ];
 
   const handleDate = (e) => {
-    setFieldValue("month", e.target.value);
-    setFieldValue("expiry", e.target.value);
+    setFieldValue("month", e.target.value, true);
+    setFieldValue("expiry", e.target.value, true);
   };
   const handleExpiry = (e) => {
     setFieldValue("expiry", values.month.concat(e.target.value));
@@ -91,7 +95,7 @@ function BaseCard() {
         <Cards
           locale={{ valid: "Expires" }}
           placeholders={{ name: "FULL NAME" }}
-          preview={false}
+          preview
           cvc={values.cvc}
           expiry={values.expiry}
           expiryyear={values.year}
@@ -149,12 +153,13 @@ function BaseCard() {
                     <select
                       name="month"
                       value={values.month}
+                      placeholder="MM"
                       onChange={(e) => {
                         handleDate(e);
                       }}
                       onBlur={handleBlur}
                     >
-                      <option value="MM" label="Month" defaultValue />
+                      {/* <option value="" label="Month" defaultValue /> */}
                       {MonthData.map((item, i) => (
                         <option key={i} value={item.value} label={item.label} />
                       ))}
@@ -170,7 +175,7 @@ function BaseCard() {
                       onChange={(e) => handleExpiry(e)}
                       onBlur={handleBlur}
                     >
-                      <option value="YY" label="Year" defaultValue />
+                      {/* <option value="" label="Year" defaultValue /> */}
                       {YearData.map((item, i) => (
                         <option key={i} value={item.value} label={item.label} />
                       ))}
@@ -189,8 +194,8 @@ function BaseCard() {
                   onChange={handleChange}
                   onBlur={handleBlur}
                   id="cvc"
-                  type="tel"
-                  maxlength="3"
+                  type="number"
+                  maxLength="3"
                   pattern="\d*"
                   onFocus={(e) => handleInputFocus(e)}
                 />
