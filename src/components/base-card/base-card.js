@@ -33,7 +33,7 @@ function BaseCard() {
         .string()
         .required("Card Name is required")
         .max(15, "Name should be at most 20 characters only"),
-      cvc: yup.string().required("CVV required"),
+      cvc: yup.string().required("CVV required").max(4, "4 characters only"),
       month: yup.string().required("month required"),
       year: yup.string().required("year required"),
     }),
@@ -107,6 +107,7 @@ function BaseCard() {
 
       {/* BaseCard input details */}
       <div className={cardStyles.cardWrapper}>
+        <p className={cardStyles.cardHolder}>Card Holder</p>
         <form className={cardStyles} onSubmit={handleSubmit}>
           <div className={cardStyles.inputWrap}>
             <InputField

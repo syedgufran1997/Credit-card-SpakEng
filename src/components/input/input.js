@@ -15,6 +15,7 @@ function Input({
   maxLength,
   onKeyPress,
   onPaste,
+  pattern,
 }) {
   return (
     <div className={inputStyles.inputWrap}>
@@ -32,6 +33,7 @@ function Input({
         onPaste={onPaste}
         onKeyPress={onKeyPress}
         maxLength={maxLength}
+        pattern={pattern}
       />
     </div>
   );
